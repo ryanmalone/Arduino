@@ -33,17 +33,17 @@ unsigned long msgSequenceCount = 0;
 // Set client ID so server knows which bike message is being sent from.
 int clientId = 1;
 // Message to send
-char currentRotationsMsg[22];
+//char currentRotationsMsg[22];
 
-char* MesgPrefix = "##BM##";
+//char* MesgPrefix = "##BM##";
 
 
 void setup()
 { 
     Serial.begin(9600); // Debugging only
     Serial.println("setup");
-    // Initialise the IO and ISR
-   // vw_set_ptt_inverted(true); // Required for DR3100
+    // Initialise the IO and ISR 
+    vw_set_ptt_inverted(true); // Required for DR3100
      vw_set_tx_pin(3); 
     vw_setup(2000);      // Bits per sec
     vw_rx_start();       // Start the receiver PLL running
@@ -70,17 +70,26 @@ void loop()
    // sprintf(currentRotationsMsg, "%d,%d,%d,%d,", 1, 2, 3, 4);
     sprintf(currentRotationsMsg, "%s,%d,%lu,%lu", MesgPrefix, clientId, msgSequenceCount, rotationCount);
     
+    const char *msg = "hello";
+    
     
     uint8_t buf[VW_MAX_MESSAGE_LEN];
     uint8_t buflen = VW_MAX_MESSAGE_LEN;
     digitalWrite(13, true); // Flash a light to show transmitting
-    vw_send((uint8_t *)currentRotationsMsg, strlen(currentRotationsMsg));
+    
+     vw_send((uint8_t *)msg, strlen(msg));
     vw_wait_tx(); // Wait until the whole message is gone
-    Serial.print("Sent: ");
-    Serial.println(currentRotationsMsg);
-     Serial.print("Count: ");
-    Serial.println(rotationCount);
+    Serial.println("Sent");
     digitalWrite(13, false);
+    
+    //vw_send((uint8_t *)currentRotationsMsg, strlen(currentRotationsMsg));
+    //vw_wait_tx(); // Wait until the whole message is gone
+    //Serial.print("Sent: ");
+    
+   // Serial.println(currentRotationsMsg);
+    // Serial.print("Count: ");
+    //Serial.println(rotationCount);
+   /// digitalWrite(13, false);
     msgSequenceCount++ ;
     delay(500);
         
