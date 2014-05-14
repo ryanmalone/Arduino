@@ -33,9 +33,9 @@ unsigned long msgSequenceCount = 0;
 // Set client ID so server knows which bike message is being sent from.
 int clientId = 1;
 // Message to send
-//char currentRotationsMsg[22];
+char currentRotationsMsg[22];
 
-//char* MesgPrefix = "##BM##";
+char* MesgPrefix = "##BM##";
 
 
 void setup()
@@ -82,11 +82,11 @@ void loop()
     Serial.println("Sent");
     digitalWrite(13, false);
     
-    //vw_send((uint8_t *)currentRotationsMsg, strlen(currentRotationsMsg));
-    //vw_wait_tx(); // Wait until the whole message is gone
-    //Serial.print("Sent: ");
+    vw_send((uint8_t *)currentRotationsMsg, strlen(currentRotationsMsg));
+    vw_wait_tx(); // Wait until the whole message is gone
+    Serial.print("Sent: ");
     
-   // Serial.println(currentRotationsMsg);
+    Serial.println(currentRotationsMsg);
     // Serial.print("Count: ");
     //Serial.println(rotationCount);
    /// digitalWrite(13, false);
@@ -100,7 +100,7 @@ void rising()
  static unsigned long last_interrupt_time = 0;
   unsigned long interrupt_time = millis();
   // If interrupts come faster than 10ms, assume it's a bounce and ignore
-  if (interrupt_time - last_interrupt_time > 30)
+  if (interrupt_time - last_interrupt_time > 50)
   {
     rotationCount++;
   }
