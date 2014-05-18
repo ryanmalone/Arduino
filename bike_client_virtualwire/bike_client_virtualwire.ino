@@ -91,20 +91,24 @@ void loop()
     //Serial.println(rotationCount);
    /// digitalWrite(13, false);
     msgSequenceCount++ ;
-    delay(500);
+    delay(200);
         
 }
 
 void rising()
 {
- static unsigned long last_interrupt_time = 0;
-  unsigned long interrupt_time = millis();
-  // If interrupts come faster than 10ms, assume it's a bounce and ignore
-  if (interrupt_time - last_interrupt_time > 50)
-  {
+  
+  // Enable the commented stuff below if using a reed switch
+  // Ive fount them really unreliable.
+  
+// static unsigned long last_interrupt_time = 0;
+//  unsigned long interrupt_time = millis();
+//  // If interrupts come faster than 10ms, assume it's a bounce and ignore
+//  if (interrupt_time - last_interrupt_time > 50)
+//  {
     rotationCount++;
-  }
-  last_interrupt_time = interrupt_time;
+//  }
+//  last_interrupt_time = interrupt_time;
 }
 
 
